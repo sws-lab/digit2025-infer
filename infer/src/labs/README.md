@@ -138,8 +138,7 @@ This improvement should allow your analysis to pass the tests in [LeaksInterproc
 Hint: What do return values look like in infer? They are assignments to a special variable, detected by `Var.is_return`. You may also want to match only return variables of some specific object type. Use this code to look at the classname of the type of the return value:
 
 ```OCaml
-    | Assign
-        (Base (ret, {Typ.desc= Typ.Tptr ({Typ.desc= Typ.Tstruct ret_typename}, _)}), _rhs_exp, _loc)
+    | Store {e1= Lvar ret; e2= _rhs; typ={ Typ.desc= Typ.Tptr ({Typ.desc= Typ.Tstruct ret_typename}, _)}; loc= _loc}
       when Var.is_return ret ->
 ```
 
