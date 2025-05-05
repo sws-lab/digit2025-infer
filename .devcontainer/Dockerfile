@@ -37,7 +37,10 @@ RUN opam init --reinit --bare --disable-sandboxing --yes --auto-setup
 # # Download the latest Infer from git
 # RUN cd / && \
 #     git clone --depth 1 https://github.com/facebook/infer/
-COPY . /infer
+COPY build-infer.sh /infer/
+COPY opam /infer/opam/
+COPY scripts /infer/scripts/
+COPY dependencies/llvm /infer/dependencies/llvm/
 
 # Build opam deps first, then infer. This way if any step fails we
 # don't lose the significant amount of work done in the previous
