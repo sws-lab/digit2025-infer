@@ -8,43 +8,21 @@ The solutions to the exercises can also be found in this directory, each in thei
 
 ## (0) Quick Start
 
-### (a) With Docker...
+Using **VS Code Dev Containers** is the fastest way: everything is set up in the Docker image for you to start hacking on Infer straight away.
 
-Using Docker is the fastest way: you do not need to clone the Infer repository and everything is set up in the Docker image for you to start hacking on Infer straight away.
+1. Get VS Code Dev Containers: https://code.visualstudio.com/docs/remote/containers
 
-1. Get Docker: https://www.docker.com/get-started
+2. Clone this repository from https://github.com/sws-lab/digit2025-infer
 
-2. Run the infer Docker image with `docker run -it -v $HOME/infer-docker:/infer-host infer/infer:infer-latest-java-dev /bin/bash`. This will give you a prompt *inside the Docker image*. Do not close that terminal for the duration of the lab.
+3. Open the cloned repository in a Dev Container:
 
-3. Within Docker, pull the latest version of infer, copy the /infer directory to your mount point, then fully build infer once:
+   1. After opening VS Code in the cloned directory, select "Reopen in Container" in the notification.
 
-```shell
-cd /infer
-git branch --unset-upstream
-git pull
-git branch --set-upstream-to=origin/main master
-git pull
-cp -av /infer/. /infer-host
-make -C /infer-host -j 4
-```
+   2. If you miss the notification, you can always select "Remote-Containers: Reopen in Container" from the command palette.
 
-4. Outside Docker, you will likely need to change the permissions of `$HOME/infer-docker` to make the files editable by your user: `sudo chown $USER -R $HOME/infer-docker`.
+   This will give you a VS Code instance *inside the Docker image* to use for the duration of the lab.
 
-You can now edit the files *locally* in `$HOME/infer-docker` and build infer *inside Docker* in `/infer-host` using the shell prompt gotten in step 2. The quickest way is to run `make` from `/infer-host` once, then `make -C infer/src` for a quicker edit/compile cycle.
-
-### (a') ...or, alternatively, build Infer locally from scratch
-
-Clone the Infer repository at https://github.com/facebook/infer and read the instructions in [INSTALL.md](https://github.com/facebook/infer/blob/main/INSTALL.md) to build Infer from source. Note that you only need Infer for Java for this lab: `./build-infer.sh java` (this is faster to build).
-
-### (b) Set up your Development Environment
-
-See [CONTRIBUTING.md](https://github.com/facebook/infer/blob/main/CONTRIBUTING.md#hacking-on-the-code) to set your editor and for tips and tricks on how to hack on Infer more efficiently. One of the most useful things to install in your editor to navigate OCaml source code efficiently is [Merlin](https://github.com/ocaml/merlin/wiki). You can format your code automatically with `make fmt`.
-
-For Java, ensure that you have the following jar files in your `$CLASSPATH`:
-
-- infer/lib/java/android/android-23.jar
-- infer/dependencies/java/sun-tools/tools.jar
-
+4. Build & install Infer with `make install` in `/workspaces/infer` (the default working directory in the Dev Container).
 
 ## (1) Warm up: running, testing, and debugging Infer
 
