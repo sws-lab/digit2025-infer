@@ -44,6 +44,6 @@ COPY . /infer
 # steps.
 RUN cd /infer && ./build-infer.sh java --only-setup-opam
 # RUN cd /infer && ./build-infer.sh java
-RUN opam install ocaml-lsp-server
+RUN opam install -y ocaml-lsp-server
 
 RUN rm -rf /infer
