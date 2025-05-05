@@ -26,7 +26,7 @@ Using **VS Code Dev Containers** is the fastest way: everything is set up in the
 
 ## (1) Warm up: running, testing, and debugging Infer
 
-(a) Change to the test directory (`cd infer/tests/codetoanalyze/java/lab`) and run infer in its default configuration:
+(a) Open a new terminal and change to the test directory (`cd infer/tests/codetoanalyze/java/lab`) and run infer in its default configuration:
 
 ```
 infer -- javac Leaks.java
@@ -40,11 +40,12 @@ Infer should report 7 resource leaks. These reports come from the separation log
 infer -g --resource-leak-lab-only -- javac Leaks.java
 ```
 
-Then, open the debug HTML:
-
+This produces debug HTML at `infer-out/captured/*.html`.
+To view it, open another terminal and run:
 ```
-firefox infer-out/captured/*.html
+python3 -m http.server
 ```
+VS Code automatically sets up port forwarding between the Dev Container and the host, so you can just open http://0.0.0.0:8000/ in a browser running on the host.
 
 This helpful artifact shows the Infer warnings alongside the code they are complaining about. It also displays the CFG node(s) associated with each line of code. Clicking a CFG node shows the Infer IR associated with the node, and the pre/post state computed while analyzing the instruction. Come back to the debug HTML early and often when you can't understand what your analysis is doing–it will help!
 
