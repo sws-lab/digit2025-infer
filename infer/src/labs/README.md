@@ -123,14 +123,14 @@ Augment the summary type with state to indicate whether the current procedure re
 
 This improvement should allow your analysis to pass the tests in [LeaksInterprocedural.java](https://github.com/facebook/infer/blob/main/infer/tests/codetoanalyze/java/lab/LeaksInterprocedural.java).
 
-Hint: What do return values look like in infer? They are assignments to a special variable, detected by `Var.is_return`. You may also want to match only return variables of some specific object type. Use this code to look at the classname of the type of the return value:
+Hint: What do return values look like in infer? They are assignments to a special variable, detected by `PVar.is_return`. You may also want to match only return variables of some specific object type. Use this code to look at the classname of the type of the return value:
 
 ```OCaml
     | Store {e1= Lvar ret; e2= _rhs; typ={ Typ.desc= Typ.Tptr ({Typ.desc= Typ.Tstruct ret_typename}, _)}; loc= _loc}
-      when Var.is_return ret ->
+      when PVar.is_return ret ->
 ```
 
-Then `ret_var` is the return variable (if `Var.is_return ret_var` returns true), of type `ret_typename` (really `ret_typename*` in infer's intermediate representation).
+Then `ret_var` is the return variable (if `PVar.is_return ret_var` returns true), of type `ret_typename` (really `ret_typename*` in infer's intermediate representation).
 
 
 ## (5) Access paths
