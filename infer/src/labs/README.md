@@ -65,6 +65,15 @@ type t = int
 
 You don't need to change `join` or `widen` yet, this will be done later. You also don't need to change ResourceLeakDomain.mli, only ResourceLeakDomain.ml.
 
+Building Infer with just this change will fail with type errors.
+Change the pretty-printing function to output the integer:
+
+```ocaml
+let pp fmt resources = F.fprintf fmt "%d" resources
+```
+
+You also need to change the value of `initial`.
+
 (b) Now, in `ResourceLeaks.ml`, change the first `Call` case of `exec_instr` to bump the integer when a resource is acquired, and decrease it when a resource is released. Use `acquires_resource` (remove the leading `_`, telling OCaml not to warn that it was unused) and `releases_resource` (same). For the rest of the lab, it will be useful **not** to expose the type of `ResourceLeakDomain.t` to `ResourceLeaks.ml`, so add functions `ResourceLeakDomain.acquire_resource` and `ResourceLeakDomain.release_resource` to do the actual integer manipulations. Expose these functions in ResourceLeakDomain.mli`.
 
 Finally, look again at the HTML debug output of infer on [Leaks.java](https://github.com/facebook/infer/blob/main/infer/tests/codetoanalyze/java/lab/Leaks.java). You should see the resource count be incremented and decremented appropriately.
@@ -105,11 +114,11 @@ Augment the summary type with state to indicate whether the current procedure re
 ```OCaml
   match analyze_dependency callee_procname with
   | Some callee_summary ->
-      (* interprocedural analysis produced a summary: use it *)
-      ()
+    (* interprocedural analysis produced a summary: use it *)
+    ()
   | None ->
-     (* No summary for [callee_procname]; it's native code or missing for some reason *)
-     ()
+    (* No summary for [callee_procname]; it's native code or missing for some reason *)
+    ()
 ```
 
 This improvement should allow your analysis to pass the tests in [LeaksInterprocedural.java](https://github.com/facebook/infer/blob/main/infer/tests/codetoanalyze/java/lab/LeaksInterprocedural.java).
