@@ -18,6 +18,7 @@ RUN apt-get update && \
       libsqlite3-dev \
       sqlite3 \
       make \
+      maven \
       opam \
       openjdk-11-jdk-headless \
       patch \
